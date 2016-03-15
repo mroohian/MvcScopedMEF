@@ -1,0 +1,25 @@
+﻿@using StatelessWebAppScoped.Application.DI
+@using StatelessWebAppScoped.Controllers.Core
+@{
+    var controller = HttpContext.Current.Items[typeof(MyBaseController)] as MyBaseController;
+}
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading"><b>Scope Composition Context</b></div>
+        <div class="panel-body">
+            <p><b>Session:</b> @DepInjContext.SessionScopeCompositionContext.GetHashCode(), @DepInjContext.SessionScopeCompositionContext</p>
+            <p><b>Session based Request:</b> @DepInjContext.SessionBasedRequestScopeCompositionContext.GetHashCode(), @DepInjContext.SessionBasedRequestScopeCompositionContext</p>
+            <p><b>No Session Request:</b> @DepInjContext.RequestScopeCompositionContext.GetHashCode(), @DepInjContext.RequestScopeCompositionContext</p>
+        </div>
+        <div class="panel-heading"><b>Controller:</b> @controller <b>Hash Code:</b> @controller.GetHashCode()</div>
+        <div class="panel-body">
+            @foreach (var keyValuePair in controller.DebugLines) {
+                if (!keyValuePair.Key.StartsWith("_")) {
+                    <p><b>@keyValuePair.Key:</b> @keyValuePair.Value</p>
+                } else {
+                    <hr/>
+                }
+            }
+        </div>
+    </div>
+</div>
